@@ -1,10 +1,13 @@
 package Frontend.Steps.Pages
 
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
+import java.lang.Thread.sleep
 
+//Страница регистрации нового пользователя
 class RegistrationPage(private val driver: WebDriver){
     @FindBy(xpath = "//*[@id=\"register-user\"]/div/form/div[2]")
     private val registrationText: WebElement? = null
@@ -19,19 +22,41 @@ class RegistrationPage(private val driver: WebDriver){
     private val successRegistrationText: WebElement? = null
 
     fun returnRegText():String{
-        return registrationText?.text.toString()
+        try {
+            return registrationText?.text.toString()
+        }
+        catch (e: WebDriverException) {
+            sleep(1000)
+            return registrationText?.text.toString()
+        }
     }
 
     fun returnSuccessRegText():String{
-        return successRegistrationText?.text.toString()
+        try {
+            return successRegistrationText?.text.toString()
+        }
+        catch (e: WebDriverException) {
+            return successRegistrationText?.text.toString()
+        }
     }
 
     fun fillEmail(email: String){
-        emailField!!.sendKeys(email)
+        try {
+            emailField!!.sendKeys(email)
+        }
+        catch (e: WebDriverException){
+            sleep(1000)
+            emailField!!.sendKeys(email)
+        }
     }
 
     fun clickRegistrationButton(){
-        registrationButton?.click()
+        try {
+            registrationButton?.click()
+        }
+        catch (e: WebDriverException){
+            registrationButton?.click()
+        }
     }
 
     init {
